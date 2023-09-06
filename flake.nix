@@ -3,7 +3,7 @@
 
   inputs.flakes.url = "github:deemp/flakes";
 
-  outputs = inputs : inputs.flakes.makeFlake {
+  outputs = inputs: inputs.flakes.makeFlake {
     inputs = { inherit (inputs.flakes.all) nixpkgs codium devshell flakes-tools formatter; };
 
     perSystem = { inputs, system }:
@@ -20,10 +20,10 @@
           codium = mkCodium {
             extensions = extensionsCommon // {
               inherit (extensions) nix;
-              extra = { 
-                inherit (vscode-marketplace.adacore) ada; 
+              extra = {
+                inherit (vscode-marketplace.adacore) ada;
                 inherit (vscode-marketplace.webfreak) debug;
-                };
+              };
             };
             runtimeDependencies = [
               pkgs.direnv
@@ -31,19 +31,19 @@
             ] ++ tools;
           };
 
-          tutorial = pkgs.stdenv.mkDerivation {
-            pname = "tutorial";
+          hello_world = pkgs.stdenv.mkDerivation {
+            pname = "hello_world";
             version = "v0.0.0";
             src = ./.;
-            buildInputs = with pkgs; [gnat12 gprbuild];
+            buildInputs = tools;
 
             buildPhase = ''
-              gprbuild thing
+              gprbuild hello_world
             '';
 
             installPhase = ''
               mkdir -p $out/bin
-              mv thing $out/bin
+              mv ./.objs/hello_world $out/bin
             '';
           };
 
@@ -52,7 +52,6 @@
           writeSettings = writeSettingsJSON (settingsCommonNix // { inherit adaIdeSettings; });
         };
 
-        # "ada.projectFile": ""
         adaIdeSettings = {
           "ada.projectFile" = "./hello_world.gpr";
         };
@@ -69,6 +68,10 @@
 
           default = mkShell {
             packages = tools;
+            bash.extra = ''
+              nix flake run github:qbit/xin#flake-warn
+              echo "Ada `${pkgs.gnat12}/bin/gnatmake --version`"
+            '';
             commands =
               mkCommands "tools" tools ++
               mkRunCommandsDir "." "infra" { inherit (packages) format; } ++
@@ -79,10 +82,11 @@
               );
           };
         };
-      in {
+      in
+      {
         inherit packages devShells;
 
         formatter = inputs.formatter.${system};
       };
-    };
+  };
 }
