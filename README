@@ -1,0 +1,52 @@
+# A simple Ada project
+
+This repository contains a Hello World Ada program following the [`ada_language_server` set up tutorial](https://github.com/AdaCore/ada_language_server/wiki/Getting-Started).
+
+We use nix flakes to provision `gdb`, `gnat12` and `gprbuild`. The flake also provides a `vscodium` executable with preinstalled extensions, specifically `adacore.ada` and `webfreak.debug`.
+
+With nix installed,
+
+- `nix develop` to enter a nix shell.
+- `nix run .#codium` to launch the IDE.
+- `nix run .#writeSettings` to update the vscodium settings
+- `nix run .#hello_world` to build and run the Ada project executable
+
+## Errors
+
+The `adacore.ada` extension fails to find the Ada toolchain in its path, even though they are in scope in the integrated terminal.
+
+```sh
+$ gnatls -v
+
+GNATLS 12.3.0
+Copyright (C) 1997-2022, Free Software Foundation, Inc.
+
+Source Search Path:
+   <Current_Directory>
+   /nix/store/mr05cj10vqj8vylvw4f7vgd5giipdyjx-gnat-12.3.0/lib/gcc/x86_64-unknown-linux-gnu/12.3.0/adainclude
+
+
+Object Search Path:
+   <Current_Directory>
+   /nix/store/mr05cj10vqj8vylvw4f7vgd5giipdyjx-gnat-12.3.0/lib/gcc/x86_64-unknown-linux-gnu/12.3.0/adalib
+
+
+Project Search Path:
+   <Current_Directory>
+   /nix/store/mr05cj10vqj8vylvw4f7vgd5giipdyjx-gnat-12.3.0/x86_64-unknown-linux-gnu/lib/gnat
+   /nix/store/mr05cj10vqj8vylvw4f7vgd5giipdyjx-gnat-12.3.0/x86_64-unknown-linux-gnu/share/gpr
+   /nix/store/mr05cj10vqj8vylvw4f7vgd5giipdyjx-gnat-12.3.0/share/gpr
+   /nix/store/mr05cj10vqj8vylvw4f7vgd5giipdyjx-gnat-12.3.0/lib/gnat
+```
+
+The `adacore.ada` raises the following error when in a `.adb` file
+
+```text
+The project was loaded, but no Ada runtime found. Please check the installation of the Ada compiler.
+```
+
+The `adacore.ada` extension raises the following error when in a `.gpr` file
+
+```text
+can't find a toolchain for the following configuration: language 'Ada', target 'x86_64-linux', default runtime
+```

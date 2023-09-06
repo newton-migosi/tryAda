@@ -1,5 +1,6 @@
 .direnv
 .objs
+.vscode
 *.bak
 result
 tags
