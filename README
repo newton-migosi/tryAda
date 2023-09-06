@@ -39,6 +39,13 @@ Project Search Path:
    /nix/store/mr05cj10vqj8vylvw4f7vgd5giipdyjx-gnat-12.3.0/lib/gnat
 ```
 
+Also, `$PATH` in the IDE has the required binaries (`gnat-wrapper`, `gprbuild`, `gdb`):
+
+```sh
+$ echo $PATH
+/nix/store/7fyks463qlrq5mi8a5jdnqw74h8rwn54-devshell-dir/bin:/nix/store/148x9bca5p18var9kj79pc3d589djrk8-bash-interactive-5.2-p15/bin:/path-not-set:/nix/store/7k5ycffnnkghisa76xrk7j9kgy0vhj5a-glib-2.76.3-bin/bin:/nix/store/148x9bca5p18var9kj79pc3d589djrk8-bash-interactive-5.2-p15/bin:/nix/store/i4r4am1hf82qknwxnp449fa9yzk44gz4-rnix-lsp-unstable-2022-11-27/bin:/nix/store/f18iig5c415f81gmiyyzrzglgsyyaijs-nixpkgs-fmt-1.3.0/bin:/nix/store/wq5805kdns8g1wbcm4f1xkh14mvclbpj-direnv-2.32.3/bin:/nix/store/148x9bca5p18var9kj79pc3d589djrk8-bash-interactive-5.2-p15/bin:/nix/store/bvp8a8zpkp3zji1nxpgcgh2ncwvkhf5v-gnat-wrapper-12.3.0/bin:/nix/store/q7r3bhwhiazi2drhcwb47chnfb96j2vx-gprbuild-23.0.0/bin:/nix/store/alzprwcam78airwgyl12mmgjsad8zs11-gdb-13.2/bin:/home/user/.nvm/versions/node/v18.14.2/bin:/home/user/anaconda3/bin:/home/user/anaconda3/condabin:/home/user/.cargo/bin:/home/user/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/user/.cabal/bin:/home/user/.ghcup/bin
+```
+
 The `adacore.ada` raises the following error when in a `.adb` file
 
 ```text
